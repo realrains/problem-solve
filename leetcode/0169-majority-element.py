@@ -9,7 +9,7 @@ class Solution:
         for num in nums:
             if count == 0:
                 major = num
-            elif major == num:
+            if major == num:
                 count += 1
             else:
                 count -= 1
