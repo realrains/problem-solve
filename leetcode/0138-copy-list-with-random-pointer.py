@@ -13,17 +13,13 @@ class Solution:
         new_head = Node(0)
         new_curr = new_head
 
-        pt_idx = {}
-        idx_pt = {}
-        idx = 0
+        mapping = {}
 
         while curr:
             new_curr.next = Node(curr.val)
-            pt_idx[curr] = idx
-            idx_pt[idx] = new_curr.next
+            mapping[curr] = new_curr.next
             curr = curr.next
             new_curr = new_curr.next
-            idx += 1
         
         new_head = new_head.next
         new_curr = new_head
@@ -31,7 +27,7 @@ class Solution:
 
         while new_curr:
             try:
-                new_curr.random = idx_pt[pt_idx[curr.random]]
+                new_curr.random = mapping[curr.random]
             except:
                 new_curr.random = None
             new_curr = new_curr.next
