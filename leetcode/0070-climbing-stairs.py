@@ -1,13 +1,14 @@
 class Solution:
-    def __init__(self):
-        self.dp = [0 for _ in range(46)]
-        self.dp[0] = 1
-        self.dp[1] = 1
-
     def climbStairs(self, n: int) -> int:
-        if self.dp[n] != 0:
-            return self.dp[n]
+        memo = [0, 1, 2]
+
+        if n < 3:
+            return memo[n]
+
+        for i in range(2, n):
+            new_way = memo[1] + memo[2]
+            memo[0] = memo[1]
+            memo[1] = memo[2]
+            memo[2] = new_way
         
-        self.dp[n] = self.climbStairs(n-1) + self.climbStairs(n-2)
-        return self.dp[n]
-        
+        return memo[2]
