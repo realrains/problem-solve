@@ -1,29 +1,23 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        def rsearch(start, end, target):
-            while start <= end:
-                mid = (start + end) // 2
-                val = matrix[mid][0]
-                if val == target:
-                    return mid
-                if val > target:
-                    end = mid - 1
-                else:
-                    start = mid + 1
-            
-            return end
+        m = len(matrix)
+        n = len(matrix[0])
 
-        def bsearch(start, end, row, value):
-            while start <= end:
-                mid = (start + end) // 2
-                if row[mid] == value:
-                    return True
-                if row[mid] < value:
-                    start = mid + 1
-                else:
-                    end = mid - 1
-            return False
+        start = 0
+        end = m * n - 1
 
-        row_idx = rsearch(0, len(matrix) - 1, target)
-        row = matrix[row_idx]
-        return bsearch(0, len(row) - 1, row, target)
+        while start <= end:
+            mid = (start + end) // 2
+            row = mid // n
+            col = mid - (n * row)
+
+            val = matrix[row][col]
+
+            if val == target:
+                return True
+            if val < target:
+                start = mid + 1
+            else:
+                end = mid - 1
+        
+        return False
