@@ -1,21 +1,32 @@
-from typing import List
-
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
-        zeros = []
-        for y in range(len(matrix)):
-            for x in range(len(matrix[0])):
+        m = len(matrix)
+        n = len(matrix[0])
+        zero_row = False
+        zero_col = False
+
+        for y in range(m):
+            for x in range(n):
                 if matrix[y][x] == 0:
-                    zeros.append((y, x))
+                    if y > 0:
+                        matrix[0][x] = 0
+                    else:
+                        zero_row = True
+
+                    if x > 0:
+                        matrix[y][0] = 0
+                    else:
+                        zero_col = True
         
-        for y, x in zeros:
-            self.set_row(y, matrix)
-            self.set_col(x, matrix)
-    
-    def set_row(self, y, matrix):
-        for x in range(len(matrix[0])):
-            matrix[y][x] = 0
-    
-    def set_col(self, x, matrix):
-        for y in range(len(matrix)):
-            matrix[y][x] = 0
+        for y in range(1, m):
+            for x in range(1, n):
+                if matrix[0][x] == 0 or matrix[y][0] == 0:
+                    matrix[y][x] = 0
+        
+        if zero_row:
+            for x in range(n):
+                matrix[0][x] = 0
+        
+        if zero_col:
+            for y in range(m):
+                matrix[y][0] = 0
